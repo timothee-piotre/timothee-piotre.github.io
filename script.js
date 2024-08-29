@@ -70,6 +70,7 @@
                 document.getElementById("forgotPasswordForm").classList.add("hidden");
                 document.getElementById("groupSection").classList.remove("hidden");
                 document.getElementById("socialSection").classList.add("hidden");
+                window.location.href = 'home.html';
                 afficherGroupes();
             } else {
                 alert("Email ou mot de passe incorrect !");
