@@ -64,6 +64,7 @@
             const user = utilisateurs.find(u => u.email === email && u.password === password);
             if (user) {
                 alert("connection établie")
+                window.location.replace="home.html";
                 currentUser = user;
                 document.getElementById("currentUser").textContent = user.nom;
                 document.getElementById("loginForm").classList.add("hidden");
@@ -71,7 +72,6 @@
                 document.getElementById("forgotPasswordForm").classList.add("hidden");
                 document.getElementById("groupSection").classList.remove("hidden");
                 document.getElementById("socialSection").classList.add("hidden");
-                window.location.replace="home.html";
                 afficherGroupes();
             } else {
                 alert("Email ou mot de passe incorrect !");
