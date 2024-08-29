@@ -1,0 +1,64 @@
+/* css/style.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 1rem;
+}
+
+main {
+    padding: 2rem;
+}
+
+form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+label {
+    display: block;
+    margin-top: 1rem;
+}
+
+input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#groups-list {
+    margin-top: 2rem;
+}
+
+#groups-list .group {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
