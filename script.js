@@ -72,6 +72,7 @@
                 document.getElementById("socialSection").classList.add("hidden");
                 window.location.href = 'home.html';
                 afficherGroupes();
+                alert("connection établie")
             } else {
                 alert("Email ou mot de passe incorrect !");
             }
