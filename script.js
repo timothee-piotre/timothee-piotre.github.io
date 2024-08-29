@@ -369,9 +369,11 @@ function register(){
                 username: user.username,
                 email: user.email,
                 token: generateToken(user.id),
+                alert("inscription effectuée"),
             });
         } catch (error) {
             res.status(400).json({ message: 'User could not be created', error: error.message });
+            alert("une erreur est survenue",error.message),
         }
 }};
 function login() {
@@ -387,6 +389,7 @@ function login() {
                     username: user.username,
                     email: user.email,
                     token: generateToken(user.id),
+                    alert("connection éffectuée"),
                 });
             } else {
                 res.status(401).json({ message: 'Invalid email or password' });
