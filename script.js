@@ -64,7 +64,7 @@
             const user = utilisateurs.find(u => u.email === email && u.password === password);
             if (user) {
                 alert("connection établie")
-                window.location.replace="home.html";
+                location.href="home.html";
                 currentUser = user;
                 document.getElementById("currentUser").textContent = user.nom;
                 document.getElementById("loginForm").classList.add("hidden");
