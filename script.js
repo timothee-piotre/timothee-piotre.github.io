@@ -358,46 +358,37 @@ const jwt = require('jsonwebtoken');
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
 };
-function register(){
-    exports.register = async (req, res) => {
-        const { username, email, password } = req.body;
+function register() {
+    const name = document.getElementById("registerName").value;
+    const email = document.getElementById("registerEmail").value;
+    const password = document.getElementById("registerPassword").value;
+    if (utilisateurs.find(u => u.email === email)) {
+        alert("L'email est déjà utilisé !");
+        return;
+    }
+    utilisateurs.push({ nom: name, email: email, password: password });
+    localStorage.setItem("utilisateurs", JSON.stringify(utilisateurs));
+    alert("Inscription réussie !");
+    showLoginForm();
+}
 
-        try {
-            const user = await User.create({ username, email, password });
-            res.status(201).json({
-                id: user.id,
-                username: user.username,
-                email: user.email,
-                token: generateToken(user.id),
-                alert("inscription effectuée"),
-            });
-        } catch (error) {
-            res.status(400).json({ message: 'User could not be created', error: error.message });
-            alert("une erreur est survenue",error.message),
-        }
-}};
 function login() {
-    exports.login = async (req, res) => {
-        const { email, password } = req.body;
-
-        try {
-            const user = await User.findOne({ where: { email } });
-
-            if (user && (await user.matchPassword(password))) {
-                res.json({
-                    id: user.id,
-                    username: user.username,
-                    email: user.email,
-                    token: generateToken(user.id),
-                    alert("connection éffectuée"),
-                });
-            } else {
-                res.status(401).json({ message: 'Invalid email or password' });
-            }
-        } catch (error) {
-            res.status(400).json({ message: 'Cannot log in', error: error.message });
-        }
-}};
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
+    const user = utilisateurs.find(u => u.email === email && u.password === password);
+    if (user) {
+        currentUser = user;
+        document.getElementById("currentUser").textContent = user.nom;
+        document.getElementById("loginForm").classList.add("hidden");
+        document.getElementById("registerForm").classList.add("hidden");
+        document.getElementById("forgotPasswordForm").classList.add("hidden");
+        document.getElementById("groupSection").classList.remove("hidden");
+        document.getElementById("socialSection").classList.add("hidden");
+        afficherGroupes();
+    } else {
+        alert("Email ou mot de passe incorrect !");
+    }
+}
 // controllers/groupController.js
 const Group = require('models/Group');
 const User = require('models/User');
