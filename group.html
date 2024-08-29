@@ -14,11 +14,34 @@
             <a href="index.html">Déconnexion</a>
         </nav>
     </header>
-    <main>
-        <button id="create-group">Créer un Groupe</button>
-        <button id="join-group">Rejoindre un Groupe</button>
-        <div id="groups-list"></div>
-    </main>
+        <div id="groupSection" class="hidden">
+            <p>Bienvenue, <span id="currentUser"></span>! <button onclick="logout()">Se déconnecter</button></p>
+
+            <h2>Mes Groupes</h2>
+            <div id="groupsList"></div>
+
+            <button onclick="toggleGroupMenu()">Nouveau Groupe</button>
+            <div id="groupMenu" class="hidden">
+                <button onclick="showCreateGroupForm()">Créer un Groupe</button>
+                <button onclick="showJoinGroupForm()">Intégrer un Groupe</button>
+            </div>
+
+            <!-- Formulaire de création de groupe -->
+            <div id="createGroupForm" class="form-group hidden">
+                <h3>Créer un Groupe</h3>
+                <label for="groupName">Nom du Groupe :</label>
+                <input type="text" id="groupName" placeholder="Entrez le nom du groupe">
+                <button onclick="creerGroupe()">Créer</button>
+            </div>
+
+            <!-- Formulaire pour rejoindre un groupe -->
+            <div id="joinGroupForm" class="form-group hidden">
+                <h3>Intégrer un Groupe</h3>
+                <label for="groupCode">Code du Groupe :</label>
+                <input type="text" id="groupCode">
+                <button onclick="rejoindreGroupe()">Rejoindre</button>
+            </div>
+        </div>
     <script src="script.js"></script>
 </body>
 </html>
