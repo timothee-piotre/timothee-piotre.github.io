@@ -21,6 +21,8 @@
         <button onclick="showCreateGroupForm()">Créer un Groupe</button>
         <button onclick="showJoinGroupForm()">Rejoindre un Groupe</button>
         <div id="groups-list"></div>
+    </main>
+    <main class="hiden">
         <div id="createGroupForm" class="hidden">
             <h2>Créer un groupe</h2>
             <label for="groupName">Nom du groupe :</label>
@@ -29,7 +31,7 @@
             <input type="text" id="groupCode" required><br>
             <button onclick="createGroup()">Créer</button>
         </div>
-            <div id="joinGroupForm" class="hidden">
+        <div id="joinGroupForm" class="hidden">
             <h2>Rejoindre un groupe</h2>
             <label for="joinGroupCode">Code du groupe :</label>
             <input type="text" id="joinGroupCode" required><br>
