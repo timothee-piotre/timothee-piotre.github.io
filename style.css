@@ -53,16 +53,16 @@ input {
 button {
     margin-top: 1rem;
     padding: 0.5rem 1rem;
-    background-color: #4CAF50;
+    background-color: #000000;
     color: white;
     border: none;
     cursor: pointer;
 }
 
 a {
-    margin-top: 1rem;
+    margin-top: 2rem;
     padding: 0.5rem 1rem;
-    background-color: #4CAF50;
+    background-color: #000000;
     color: white;
     border: none;
     cursor: pointer;
