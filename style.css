@@ -1,11 +1,11 @@
 /* css/style.css */
 
 body {
+    background-color: #11012e;
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     text-align: center;
-    background-color: #11012e;
 }
 
 header {
