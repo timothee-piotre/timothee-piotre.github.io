@@ -23,9 +23,7 @@ nav a {
 main {
     padding: 2rem;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    gap: 10px; /* Espace entre les éléments */
+    margin-left: 50px;
 }
 
 form {
