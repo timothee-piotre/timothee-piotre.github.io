@@ -90,19 +90,23 @@
         function login() {
             const email = document.getElementById("loginEmail").value;
             const password = document.getElementById("loginPassword").value;
-
             const user = utilisateurs.find(u => u.email === email && u.password === password);
-
             if (user) {
+                alert("connection établie")
+                window.location.href="home.html";
+                res.redirect("/home.html");
                 currentUser = user;
-                document.getElementById("userName").textContent = currentUser.nom;
-                document.getElementById("userPoints").textContent = currentUser.points;
-                showUserInterface();
+                document.getElementById("currentUser").textContent = user.nom;
+                document.getElementById("loginForm").classList.add("hidden");
+                document.getElementById("registerForm").classList.add("hidden");
+                document.getElementById("forgotPasswordForm").classList.add("hidden");
+                document.getElementById("groupSection").classList.remove("hidden");
+                document.getElementById("socialSection").classList.add("hidden");
+                afficherGroupes();
             } else {
                 alert("Email ou mot de passe incorrect !");
             }
         }
-
         function sendResetCode() {
             const email = document.getElementById("forgotEmail").value;
             const user = utilisateurs.find(u => u.email === email);
