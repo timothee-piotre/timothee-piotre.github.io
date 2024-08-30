@@ -1,81 +1,63 @@
         let utilisateurs = JSON.parse(localStorage.getItem("utilisateurs")) || [];
-        let currentUser = null;
-        let currentPhoto = "";
-        let currentGroup = null;
         let groupes = JSON.parse(localStorage.getItem("groupes")) || [];
-        let resetCode = null;
+        let currentUser = null;
+        let currentGroup = null;
+        let currentPhotoIndex = 0;
 
         function showLoginForm() {
             document.getElementById("loginForm").classList.remove("hidden");
             document.getElementById("registerForm").classList.add("hidden");
             document.getElementById("forgotPasswordForm").classList.add("hidden");
-            document.getElementById("groupSection").classList.add("hidden");
-            document.getElementById("socialSection").classList.add("hidden");
+            document.getElementById("resetCodeSection").classList.add("hidden");
+            document.getElementById("userInterface").classList.add("hidden");
+            document.getElementById("createGroupForm").classList.add("hidden");
+            document.getElementById("joinGroupForm").classList.add("hidden");
+            document.getElementById("groupPage").classList.add("hidden");
         }
 
         function showRegisterForm() {
             document.getElementById("loginForm").classList.add("hidden");
             document.getElementById("registerForm").classList.remove("hidden");
-            document.getElementById("forgotPasswordForm").classList.add("hidden");
-            document.getElementById("groupSection").classList.add("hidden");
-            document.getElementById("socialSection").classList.add("hidden");
         }
 
         function showForgotPasswordForm() {
             document.getElementById("loginForm").classList.add("hidden");
-            document.getElementById("registerForm").classList.add("hidden");
             document.getElementById("forgotPasswordForm").classList.remove("hidden");
-            document.getElementById("groupSection").classList.add("hidden");
-            document.getElementById("socialSection").classList.add("hidden");
         }
 
-        function sendResetCode() {
-            const email = document.getElementById("forgotEmail").value;
-            const user = utilisateurs.find(u => u.email === email);
-            if (user) {
-                resetCode = Math.floor(100000 + Math.random() * 900000); // Générer un code aléatoire à 6 chiffres
-                alert(`Code de réinitialisation envoyé : ${resetCode}`);
-                document.getElementById("resetCodeSection").classList.remove("hidden");
-            } else {
-                alert("Email non trouvé !");
-            }
+        function showUserInterface() {
+            document.getElementById("loginForm").classList.add("hidden");
+            document.getElementById("registerForm").classList.add("hidden");
+            document.getElementById("forgotPasswordForm").classList.add("hidden");
+            document.getElementById("resetCodeSection").classList.add("hidden");
+            document.getElementById("userInterface").classList.remove("hidden");
+            document.getElementById("createGroupForm").classList.add("hidden");
+            document.getElementById("joinGroupForm").classList.add("hidden");
+            document.getElementById("groupPage").classList.add("hidden");
+            updateGroupList();
         }
 
-        function resetPassword() {
-            const code = document.getElementById("resetCode").value;
-            const newPassword = document.getElementById("newPassword").value;
-            const email = document.getElementById("forgotEmail").value;
-            if (parseInt(code) === resetCode) {
-                const user = utilisateurs.find(u => u.email === email);
-                if (user) {
-                    user.password = newPassword;
-                    localStorage.setItem("utilisateurs", JSON.stringify(utilisateurs));
-                    alert("Mot de passe réinitialisé avec succès !");
-                    showLoginForm();
-                }
-            } else {
-                alert("Code invalide !");
-            }
+        function showCreateGroupForm() {
+            document.getElementById("userInterface").classList.add("hidden");
+            document.getElementById("createGroupForm").classList.remove("hidden");
         }
 
-        function login() {
-            const email = document.getElementById("loginEmail").value;
-            const password = document.getElementById("loginPassword").value;
-            const user = utilisateurs.find(u => u.email === email && u.password === password);
-            if (user) {
-                alert("connection établie")
-                window.location.href="home.html";
-                res.redirect("/home.html");
-                currentUser = user;
-                document.getElementById("currentUser").textContent = user.nom;
-                document.getElementById("loginForm").classList.add("hidden");
-                document.getElementById("registerForm").classList.add("hidden");
-                document.getElementById("forgotPasswordForm").classList.add("hidden");
-                document.getElementById("groupSection").classList.remove("hidden");
-                document.getElementById("socialSection").classList.add("hidden");
-                afficherGroupes();
-            } else {
-                alert("Email ou mot de passe incorrect !");
+        function showJoinGroupForm() {
+            document.getElementById("userInterface").classList.add("hidden");
+            document.getElementById("joinGroupForm").classList.remove("hidden");
+        }
+
+        function showGroupPage(groupCode) {
+            const group = groupes.find(g => g.code === groupCode);
+            if (group) {
+                document.getElementById("userInterface").classList.add("hidden");
+                document.getElementById("createGroupForm").classList.add("hidden");
+                document.getElementById("joinGroupForm").classList.add("hidden");
+                document.getElementById("groupPage").classList.remove("hidden");
+
+                document.getElementById("groupNameDisplay").textContent = group.name;
+                currentGroup = group;
+                displayPhotos();
             }
         }
 
@@ -83,167 +65,271 @@
             const name = document.getElementById("registerName").value;
             const email = document.getElementById("registerEmail").value;
             const password = document.getElementById("registerPassword").value;
+            const code = Math.random().toString(36).substring(2, 12);
+
             if (utilisateurs.find(u => u.email === email)) {
                 alert("L'email est déjà utilisé !");
                 return;
             }
-            utilisateurs.push({ nom: name, email: email, password: password });
+
+            const user = { nom: name, email: email, password: password, resetCode: code, points: 0, groupes: [] };
+            utilisateurs.push(user);
             localStorage.setItem("utilisateurs", JSON.stringify(utilisateurs));
-            alert("Inscription réussie !");
+
+            // Génération du fichier de code
+            const codeBlob = new Blob([code], { type: 'text/plain' });
+            const downloadLink = document.createElement('a');
+            downloadLink.href = URL.createObjectURL(codeBlob);
+            downloadLink.download = 'reset_code.txt';
+            downloadLink.click();
+
+            alert("Inscription réussie ! Code de réinitialisation téléchargé.");
             showLoginForm();
         }
 
-        function logout() {
-            currentUser = null;
-            document.getElementById("groupSection").classList.add("hidden");
-            document.getElementById("socialSection").classList.add("hidden");
-            showLoginForm();
-        }
+        function login() {
+            const email = document.getElementById("loginEmail").value;
+            const password = document.getElementById("loginPassword").value;
 
-        function toggleGroupMenu() {
-            const menu = document.getElementById("groupMenu");
-            menu.classList.toggle("hidden");
-        }
+            const user = utilisateurs.find(u => u.email === email && u.password === password);
 
-        function showCreateGroupForm() {
-            document.getElementById("createGroupForm").classList.remove("hidden");
-            document.getElementById("joinGroupForm").classList.add("hidden");
-        }
-
-        function showJoinGroupForm() {
-            document.getElementById("createGroupForm").classList.add("hidden");
-            document.getElementById("joinGroupForm").classList.remove("hidden");
-        }
-
-        function creerGroupe() {
-            const groupName = document.getElementById("groupName").value;
-            if (groupes.find(g => g.nom === groupName)) {
-                alert("Groupe déjà existant !");
-                return;
+            if (user) {
+                currentUser = user;
+                document.getElementById("userName").textContent = currentUser.nom;
+                document.getElementById("userPoints").textContent = currentUser.points;
+                showUserInterface();
+            } else {
+                alert("Email ou mot de passe incorrect !");
             }
-            groupes.push({ nom: groupName, membres: [currentUser.email], publications: [] });
-            localStorage.setItem("groupes", JSON.stringify(groupes));
-            alert("Groupe créé avec succès !");
-            afficherGroupes();
         }
 
-        function rejoindreGroupe() {
+        function sendResetCode() {
+            const email = document.getElementById("forgotEmail").value;
+            const user = utilisateurs.find(u => u.email === email);
+            if (user) {
+                document.getElementById("resetCodeSection").classList.remove("hidden");
+            } else {
+                alert("Email non trouvé !");
+            }
+        }
+
+        function resetPassword() {
+            const resetCode = document.getElementById("resetCode").value;
+            const newPassword = document.getElementById("newPassword").value;
+            const email = document.getElementById("forgotEmail").value;
+
+            const user = utilisateurs.find(u => u.email === email && u.resetCode === resetCode);
+            if (user) {
+                user.password = newPassword;
+                localStorage.setItem("utilisateurs", JSON.stringify(utilisateurs));
+                alert("Mot de passe réinitialisé avec succès !");
+                showLoginForm();
+            } else {
+                alert("Code invalide !");
+            }
+        }
+
+        function createGroup() {
+            const name = document.getElementById("groupName").value;
             const code = document.getElementById("groupCode").value;
-            const groupe = groupes.find(g => g.nom === code);
-            if (groupe) {
-                if (groupe.membres.includes(currentUser.email)) {
+
+            if (groupes.find(g => g.code === code)) {
+                alert("Un groupe avec ce code existe déjà !");
+                return;
+            }
+
+            const group = { name: name, code: code, members: [currentUser.email], photos: [], scores: {} };
+            groupes.push(group);
+            localStorage.setItem("groupes", JSON.stringify(groupes));
+
+            // Ajouter l'utilisateur au groupe
+            currentUser.groupes.push(code);
+            localStorage.setItem("utilisateurs", JSON.stringify(utilisateurs));
+
+            alert("Groupe créé avec succès !");
+            showUserInterface();
+        }
+
+        function joinGroup() {
+            const code = document.getElementById("joinGroupCode").value;
+            const group = groupes.find(g => g.code === code);
+
+            if (group) {
+                if (!currentUser.groupes.includes(code)) {
+                    currentUser.groupes.push(code);
+                    group.members.push(currentUser.email);
+                    localStorage.setItem("utilisateurs", JSON.stringify(utilisateurs));
+                    localStorage.setItem("groupes", JSON.stringify(groupes));
+                    alert("Vous avez rejoint le groupe !");
+                    showUserInterface();
+                } else {
                     alert("Vous êtes déjà membre de ce groupe !");
-                    return;
                 }
-                groupe.membres.push(currentUser.email);
-                localStorage.setItem("groupes", JSON.stringify(groupes));
-                alert("Vous avez rejoint le groupe !");
-                afficherGroupes();
             } else {
                 alert("Groupe non trouvé !");
             }
         }
 
-        function afficherGroupes() {
-            const groupsList = document.getElementById("groupsList");
-            groupsList.innerHTML = "";
-            groupes.forEach(group => {
-                if (group.membres.includes(currentUser.email)) {
-                    const groupDiv = document.createElement("div");
-                    groupDiv.className = "group";
-                    groupDiv.innerHTML = `
-                        <h3>${group.nom}</h3>
-                        <p>Membres : ${group.membres.join(", ")}</p>
-                        <button onclick="enterGroup('${group.nom}')">Voir le groupe</button>
-                    `;
-                    groupsList.appendChild(groupDiv);
-                }
-            });
-        }
-
-        function enterGroup(groupName) {
-            currentGroup = groupes.find(g => g.nom === groupName);
-            if (!currentGroup) {
-                alert("Groupe non trouvé !");
+        function uploadPhoto() {
+            const fileInput = document.getElementById("photoFile");
+            if (fileInput.files.length === 0) {
+                alert("Veuillez sélectionner une photo !");
                 return;
             }
-            document.getElementById("groupTitle").textContent = currentGroup.nom;
-            document.getElementById("groupSection").classList.add("hidden");
-            document.getElementById("socialSection").classList.remove("hidden");
-            afficherPublications();
-        }
 
-        function previewPhoto() {
-            const file = document.getElementById("photoInput").files[0];
+            const file = fileInput.files[0];
             const reader = new FileReader();
-            reader.onloadend = () => {
-                document.getElementById("photoPreview").src = reader.result;
-                document.getElementById("photoPreview").classList.remove("hidden");
-            };
-            if (file) {
-                reader.readAsDataURL(file);
-                currentPhoto = file;
-            } else {
-                document.getElementById("photoPreview").classList.add("hidden");
-            }
-        }
+            reader.onload = function(event) {
+                const photo = { url: event.target.result, votes: [], author: currentUser.email };
 
-        function publier() {
-            if (!currentPhoto) {
-                alert("Aucune photo sélectionnée !");
-                return;
-            }
-            const publication = {
-                photo: URL.createObjectURL(currentPhoto),
-                notes: []
-            };
-            currentGroup.publications.push(publication);
-            localStorage.setItem("groupes", JSON.stringify(groupes));
-            alert("Publication réussie !");
-            afficherPublications();
-        }
-
-        function afficherPublications() {
-            const notationSection = document.getElementById("notationSection");
-            notationSection.innerHTML = "";
-            currentGroup.publications.forEach((pub, index) => {
-                const pubDiv = document.createElement("div");
-                pubDiv.className = "publication";
-                pubDiv.innerHTML = `
-                    <img src="${pub.photo}" class="photo-preview">
-                    <label for="note_${index}">Note :</label>
-                    <input type="number" id="note_${index}" min="1" max="5">
-                `;
-                notationSection.appendChild(pubDiv);
-            });
-        }
-
-        function soumettreNotes() {
-            currentGroup.publications.forEach((pub, index) => {
-                const note = parseInt(document.getElementById(`note_${index}`).value, 10);
-                if (!isNaN(note)) {
-                    pub.notes.push(note);
+                if (currentGroup) {
+                    currentGroup.photos.push(photo);
+                    localStorage.setItem("groupes", JSON.stringify(groupes));
+                    displayPhotos();
                 }
-            });
-            localStorage.setItem("groupes", JSON.stringify(groupes));
-            alert("Notes soumises !");
+            };
+            reader.readAsDataURL(file);
         }
 
-        function choisirAdmin() {
-            const meilleursNotes = currentGroup.publications.flatMap(pub => pub.notes).filter(note => note);
-            if (meilleursNotes.length === 0) {
-                alert("Aucune note disponible !");
+        function displayPhotos() {
+            const photoList = document.getElementById("photoList");
+            photoList.innerHTML = '';
+
+            if (currentGroup && currentGroup.photos.length > 0) {
+                currentGroup.photos.forEach((photo, index) => {
+                    const photoContainer = document.createElement("div");
+                    photoContainer.className = "photo-container";
+                    
+                    const img = document.createElement("img");
+                    img.src = photo.url;
+                    photoContainer.appendChild(img);
+
+                    // Boutons de navigation
+                    const prevButton = document.createElement("button");
+                    prevButton.className = "navigation-button prev-button";
+                    prevButton.innerHTML = "&#9664;"; // Flèche gauche
+                    prevButton.onclick = () => showPhoto(index - 1);
+                    photoContainer.appendChild(prevButton);
+
+                    const nextButton = document.createElement("button");
+                    nextButton.className = "navigation-button next-button";
+                    nextButton.innerHTML = "&#9654;"; // Flèche droite
+                    nextButton.onclick = () => showPhoto(index + 1);
+                    photoContainer.appendChild(nextButton);
+
+                    // Menu déroulant pour deviner l'auteur
+                    const authorSelect = document.createElement("select");
+                    currentGroup.members.forEach(member => {
+                        const option = document.createElement("option");
+                        option.value = member;
+                        option.textContent = member;
+                        authorSelect.appendChild(option);
+                    });
+                    photoContainer.appendChild(authorSelect);
+
+                    // Bouton de notation
+                    const rateButton = document.createElement("button");
+                    rateButton.textContent = "Noter";
+                    rateButton.onclick = () => ratePhoto(index, authorSelect.value);
+                    photoContainer.appendChild(rateButton);
+
+                    photoList.appendChild(photoContainer);
+                });
+
+                showPhoto(0); // Afficher la première photo
+            }
+        }
+
+        function showPhoto(index) {
+            if (currentGroup && currentGroup.photos.length > 0) {
+                currentPhotoIndex = (index + currentGroup.photos.length) % currentGroup.photos.length;
+                const photoContainers = document.querySelectorAll(".photo-container");
+                photoContainers.forEach((container, idx) => {
+                    container.style.display = (idx === currentPhotoIndex) ? "block" : "none";
+                });
+            }
+        }
+
+        function ratePhoto(index, author) {
+            const rating = prompt("Donnez une note (1-5) :");
+            const ratingValue = parseInt(rating);
+
+            if (isNaN(ratingValue) || ratingValue < 1 || ratingValue > 5) {
+                alert("Note invalide !");
                 return;
             }
-            const moyenneNotes = meilleursNotes.reduce((acc, note) => acc + note, 0) / meilleursNotes.length;
-            const admin = currentGroup.membres.find((membre, index) => {
-                const notes = currentGroup.publications.flatMap(pub => pub.notes);
-                return notes.some(note => note >= moyenneNotes);
-            });
-            document.getElementById("adminMessage").textContent = admin ? `L'administrateur est : ${admin}` : "Aucun administrateur trouvé.";
+
+            if (currentGroup) {
+                const photo = currentGroup.photos[index];
+                photo.votes.push({ rating: ratingValue, voter: currentUser.email });
+
+                // Mettre à jour les points de l'auteur
+                const authorUser = utilisateurs.find(u => u.email === author);
+                if (authorUser) {
+                    authorUser.points += ratingValue;
+                    localStorage.setItem("utilisateurs", JSON.stringify(utilisateurs));
+                    document.getElementById("userPoints").textContent = authorUser.points;
+                }
+
+                // Recalculer les scores des utilisateurs du groupe
+                calculateScores();
+                alert("Photo notée avec succès !");
+            }
         }
 
-        function retourGroupes() {
-            document.getElementById("groupSection").classList.remove("hidden");
-            document.getElementById("socialSection").classList.add("hidden");
+        function updateGroupList() {
+            const groupList = document.getElementById("groupList");
+            groupList.innerHTML = '';
+
+            if (currentUser) {
+                const userGroups = groupes.filter(g => currentUser.groupes.includes(g.code));
+                userGroups.forEach(group => {
+                    const groupCard = document.createElement("div");
+                    groupCard.className = "group-card";
+
+                    const groupName = document.createElement("h3");
+                    groupName.textContent = group.name;
+                    groupCard.appendChild(groupName);
+
+                    const groupPoints = document.createElement("p");
+                    groupPoints.textContent = `Points: ${group.members.reduce((sum, member) => {
+                        const user = utilisateurs.find(u => u.email === member);
+                        return sum + (user ? user.points : 0);
+                    }, 0)}`;
+                    groupCard.appendChild(groupPoints);
+
+                    const joinButton = document.createElement("button");
+                    joinButton.textContent = "Voir le groupe";
+                    joinButton.onclick = () => showGroupPage(group.code);
+                    groupCard.appendChild(joinButton);
+
+                    groupList.appendChild(groupCard);
+                });
+            }
         }
+
+        function calculateScores() {
+            const today = new Date().toDateString();
+            const lastCalculatedDate = localStorage.getItem("lastCalculatedDate");
+
+            if (today !== lastCalculatedDate) {
+                groupes.forEach(group => {
+                    group.photos.forEach(photo => {
+                        photo.votes.forEach(vote => {
+                            const authorUser = utilisateurs.find(u => u.email === photo.author);
+                            if (authorUser) {
+                                authorUser.points += vote.rating;
+                            }
+                        });
+                    });
+                });
+
+                localStorage.setItem("utilisateurs", JSON.stringify(utilisateurs));
+            }
+
+            localStorage.setItem("lastCalculatedDate", today);
+        }
+
+        window.onload = function() {
+            calculateScores();
+        };
