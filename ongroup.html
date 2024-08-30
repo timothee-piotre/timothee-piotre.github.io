@@ -1,1 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Connexion</h1>
+    </header>
+    <main>
+        <div id="socialSection" class="hidden">
+            <button onclick="retourGroupes()">Retour aux Groupes</button>
+            <h3 id="groupTitle"></h3>
 
+            <div class="publication">
+                <label for="photoInput">Prenez une photo :</label>
+                <input type="file" id="photoInput" accept="image/*" onchange="previewPhoto()">
+                <img id="photoPreview" class="photo-preview hidden">
+                <button onclick="publier()">Publier</button>
+            </div>
+
+            <div class="notation">
+                <h3>Noter les publications :</h3>
+                <div id="notationSection"></div>
+                <button onclick="soumettreNotes()">Soumettre les notes</button>
+            </div>
+
+            <button onclick="choisirAdmin()">Choisir Admin</button>
+            <p id="adminMessage"></p>
+        </div>
+    </main>
+</body>
+</html>
