@@ -8,6 +8,20 @@
     <script src="script.js"></script>
 </head>
 <body>
+    <div id="createGroupForm" class="hidden">
+        <h2>Créer un groupe</h2>
+        <label for="groupName">Nom du groupe :</label>
+        <input type="text" id="groupName" required><br>
+        <label for="groupCode">Code du groupe :</label>
+        <input type="text" id="groupCode" required><br>
+        <button onclick="createGroup()">Créer</button>
+    </div>
+    <div id="joinGroupForm" class="hidden">
+        <h2>Rejoindre un groupe</h2>
+        <label for="joinGroupCode">Code du groupe :</label>
+        <input type="text" id="joinGroupCode" required><br>
+        <button onclick="joinGroup()">Rejoindre</button>
+    </div>
     <header>
         <h1>Bienvenue sur notre réseau social</h1>
         <nav>
@@ -21,22 +35,6 @@
         <button onclick="showCreateGroupForm()">Créer un Groupe</button>
         <button onclick="showJoinGroupForm()">Rejoindre un Groupe</button>
         <div id="groups-list"></div>
-    </main>
-    <main class="hidden">
-        <div id="createGroupForm" class="hidden">
-            <h2>Créer un groupe</h2>
-            <label for="groupName">Nom du groupe :</label>
-            <input type="text" id="groupName" required><br>
-            <label for="groupCode">Code du groupe :</label>
-            <input type="text" id="groupCode" required><br>
-            <button onclick="createGroup()">Créer</button>
-        </div>
-        <div id="joinGroupForm" class="hidden">
-            <h2>Rejoindre un groupe</h2>
-            <label for="joinGroupCode">Code du groupe :</label>
-            <input type="text" id="joinGroupCode" required><br>
-            <button onclick="joinGroup()">Rejoindre</button>
-        </div>
     </main>
 </body>
 </html>
