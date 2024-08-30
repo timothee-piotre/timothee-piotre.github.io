@@ -23,7 +23,8 @@ nav a {
 main {
     padding: 2rem;
     text-align: center;
-    margin-left: 50px;
+    max-width: 400px;
+    margin: 0 auto;
 }
 
 form {
