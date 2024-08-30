@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Groupes</title>
+    <title>Mes groupes</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -19,10 +19,8 @@
                 display: none;
             }
         </style>
-        <div id="groupSection" class="hidden">
-            <p>Bienvenue, <span id="currentUser"></span>! <button onclick="logout()">Se déconnecter</button></p>
-
-            <h2>Mes Groupes</h2>
+        <div id="groupSection">
+            <p>Bienvenue, <span id="currentUser"></span>!</p>
             <div id="groupsList"></div>
 
             <button onclick="toggleGroupMenu()">Nouveau Groupe</button>
