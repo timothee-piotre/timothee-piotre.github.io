@@ -70,18 +70,9 @@ a {
     color: white;
     border: none;
     cursor: pointer;
-    position: relative;
-    top: 25px;
 }
 
-e {
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    background-color: #000000;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
+
     
 button:hover {
     background-color: #45a049;
