@@ -19,11 +19,14 @@ header {
 }
 
 nav a {
-    color: white;
-    text-decoration: none;
-    margin: 0 1rem;
     margin-top: 1rem;
-    padding: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #000000;
+    color: white;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 50px;
 }
 
 main {
