@@ -8,13 +8,11 @@
     <script src="script.js"></script>
 </head>
 <body>
-  <div>
-    <label id="groupName">nom du groupe</label>
-    <input id="groupName" type="text">
-    <label id="groupCode">Code du groupe</label>
-    <input id="groupCode" type="text">
-    <a onclick="createGroup()">soummettre</a>
-    <a onclick="updateGroupList()" href="group.html">retour aux groupes</a>
-  </div>
+    <div id="createGroupForm" class="form-group hidden">
+        <h3>Créer un Groupe</h3>
+        <label for="groupName">Nom du Groupe :</label>
+        <input type="text" id="groupName" placeholder="Entrez le nom du groupe">
+        <button type="button" onclick="creerGroupe()">Créer</button>
+    </div>
 </body>
 </html>
