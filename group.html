@@ -10,12 +10,6 @@
     <header>
         <h1>Mes Groupes</h1>
         <nav>
-            <style>
-                a{
-                    position: relative;
-                    bottom: 15px;
-                }
-            </style>
             <a href="home.html">Accueil</a>
             <a href="index.html">Déconnexion</a>
         </nav>
@@ -28,6 +22,12 @@
         </style>
         <div id="groupSection">
             <div id="groupMenu">
+                <style>
+                    a{
+                        position: relative;
+                        top: 25px;
+                    }
+                </style>
                 <a href="newgroup">Créer un Groupe</a>
                 <a onclick="showJoinGroupForm()">Intégrer un Groupe</a>
             </div>
@@ -35,18 +35,30 @@
 
             <!-- Formulaire de création de groupe -->
             <div id="createGroupForm" class="form-group hidden">
+                <style>
+                    a{
+                        position: relative;
+                        top: 25px;
+                    }
+                </style>
                 <h3>Créer un Groupe</h3>
                 <label for="groupName">Nom du Groupe :</label>
                 <input type="text" id="groupName" placeholder="Entrez le nom du groupe">
-                <button onclick="creerGroupe()">Créer</button>
+                <a onclick="creerGroupe()">Créer</a>
             </div>
 
             <!-- Formulaire pour rejoindre un groupe -->
             <div id="joinGroupForm" class="form-group hidden">
+                <style>
+                    a{
+                        position: relative;
+                        top: 25px;
+                    }
+                </style>
                 <h3>Intégrer un Groupe</h3>
                 <label for="groupCode">Code du Groupe :</label>
                 <input type="text" id="groupCode">
-                <button onclick="rejoindreGroupe()">Rejoindre</button>
+                <a onclick="rejoindreGroupe()">Rejoindre</a>
             </div>
         </div>
     <script src="script.js"></script>
