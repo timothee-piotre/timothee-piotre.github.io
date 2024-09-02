@@ -155,11 +155,11 @@
             document.getElementById("groupList").classList.remove("hidden");
         }
         function buttongotoregister() {
-                windows.location.href="register.html"
+                windows.location.href='register.html'
         }
 
         function buttongotologin() {
-                windows;location.href="login.html"
+                windows.location.href='index.html'
         }
 
         function joinGroup() {
