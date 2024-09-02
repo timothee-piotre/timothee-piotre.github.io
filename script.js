@@ -151,7 +151,8 @@
             localStorage.setItem("utilisateurs", JSON.stringify(utilisateurs));
 
             alert("Groupe créé avec succès !");
-            showUserInterface();
+            windows.location.href="group.html";
+            document.getElementById("groupList").classList.remove("hidden");
         }
 
         function joinGroup() {
