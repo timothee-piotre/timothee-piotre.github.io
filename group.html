@@ -22,43 +22,25 @@
         </style>
         <div id="groupSection">
             <div id="groupMenu">
-                <style>
-                    a{
-                        position: relative;
-                        top: 25px;
-                    }
-                </style>
-                <a onclick="createGroupForm()">Créer un Groupe</a>
-                <a onclick="showJoinGroupForm()">Intégrer un Groupe</a>
+                <button type="button" onclick="createGroupForm()">Créer un Groupe</button>
+                <button type="button" onclick="showJoinGroupForm()">Intégrer un Groupe</button>
             </div>
             <div id="groupsList"></div>
 
             <!-- Formulaire de création de groupe -->
             <div id="createGroupForm" class="form-group hidden">
-                <style>
-                    a{
-                        position: relative;
-                        top: 25px;
-                    }
-                </style>
                 <h3>Créer un Groupe</h3>
                 <label for="groupName">Nom du Groupe :</label>
                 <input type="text" id="groupName" placeholder="Entrez le nom du groupe">
-                <a onclick="creerGroupe()">Créer</a>
+                <button type="button" onclick="creerGroupe()">Créer</a>
             </div>
 
             <!-- Formulaire pour rejoindre un groupe -->
             <div id="joinGroupForm" class="form-group hidden">
-                <style>
-                    a{
-                        position: relative;
-                        top: 25px;
-                    }
-                </style>
                 <h3>Intégrer un Groupe</h3>
                 <label for="groupCode">Code du Groupe :</label>
                 <input type="text" id="groupCode">
-                <a onclick="rejoindreGroupe()">Rejoindre</a>
+                <button type="button" onclick="rejoindreGroupe()">Rejoindre</button>
             </div>
         </div>
     <script src="script.js"></script>
