@@ -38,7 +38,7 @@
         }
 
         function showCreateGroupForm() {
-            document.getElementById("userInterface").classList.add("hidden");
+            window.location.href='newgroup.html';
             document.getElementById("createGroupForm").classList.remove("hidden");
         }
 
