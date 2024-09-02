@@ -154,6 +154,13 @@
             windows.location.href="group.html";
             document.getElementById("groupList").classList.remove("hidden");
         }
+        function buttongotoregister() {
+                windows.location.href="register.html"
+        }
+
+        function buttongotologin() {
+                windows;location.href="login.html"
+        }
 
         function joinGroup() {
             const code = document.getElementById("joinGroupCode").value;
