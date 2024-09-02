@@ -70,6 +70,8 @@ a {
     color: white;
     border: none;
     cursor: pointer;
+    position: relative;
+    top: 25px;
 }
 
 e {
