@@ -84,7 +84,7 @@
             downloadLink.click();
 
             alert("Inscription réussie ! Code de réinitialisation téléchargé.");
-            showLoginForm();
+            window.location.href="index.html";
         }
 
         function login() {
