@@ -5,17 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accueil</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
 </head>
 <header>
     <h1>créer un groupe</h1>
 </header>
 <body>
-    <label for="groupName">Nom du Groupe :</label>
-    <input type="text" id="groupName" placeholder="Entrez le nom du groupe">
-    <label for="groupCode">code du Groupe :</label>
-    <input type="text" id="groupCode" placeholder="Entrez le code du groupe">
+    <label for="groupName">Nom du groupe :</label>
+    <input type="text" id="groupName" required><br>
+
+    <label for="groupCode">Code du groupe :</label>
+    <input type="text" id="groupCode" required><br>
+
     <button onclick="createGroup()">Créer</button>
     <a href="group.html"><button>retour aux groupes</button></a>
-    <script src="script.js"></script>
 </body>
 </html>
