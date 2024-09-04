@@ -7,6 +7,23 @@
     <link rel="stylesheet" href="style.css">
     <script>
         function createGroup() {
+            const name = document.getElementById("groupName").value;
+            const code = document.getElementById("groupCode").value;
+
+            if (groupes.find(g => g.code === code)) {
+                alert("Un groupe avec ce code existe déjà !");
+                return;
+            }
+
+            const group = { name: name, code: code, members: [currentUser.email], photos: [], scores: {} };
+            groupes.push(group);
+            localStorage.setItem("groupes", JSON.stringify(groupes));
+
+            // Ajouter l'utilisateur au groupe
+            currentUser.groupes.push(code);
+            localStorage.setItem("utilisateurs", JSON.stringify(utilisateurs));
+
+            alert("Groupe créé avec succès !");
             window.location.href="group.html";
             document.getElementById("groupList").classList.remove("hidden");
         }
