@@ -92,14 +92,14 @@ button:hover {
     margin-bottom: 1rem;
 }
 
-#enhautagauche {
+#gauche {
     position: absolute;
     top: 0;
     left: 0;
     margin: 10px;
 }
 
-#enhautadroite {
+#droite {
     position: absolute;
     top: 0;
     right: 0;
