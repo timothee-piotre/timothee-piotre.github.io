@@ -5,6 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accueil</title>
     <link rel="stylesheet" href="style.css">
+</head>
+<header>
+    <h1>créer un groupe</h1>
+</header>
+<body>
+    <label for="groupName">Nom du groupe :</label>
+    <input type="text" id="groupName" required><br>
+
+    <label for="groupCode">Code du groupe :</label>
+    <input type="text" id="groupCode" required><br>
+
+    <button onclick="createGroup()">Créer</button>
+    <a href="group.html"><button>retour aux groupes</button></a>
+</body>
     <script>
         function createGroup() {
             const name = document.getElementById("groupName").value;
@@ -28,18 +42,4 @@
             document.getElementById("groupList").classList.remove("hidden");
         }
     </script>
-</head>
-<header>
-    <h1>créer un groupe</h1>
-</header>
-<body>
-    <label for="groupName">Nom du groupe :</label>
-    <input type="text" id="groupName" required><br>
-
-    <label for="groupCode">Code du groupe :</label>
-    <input type="text" id="groupCode" required><br>
-
-    <button onclick="createGroup()">Créer</button>
-    <a href="group.html"><button>retour aux groupes</button></a>
-</body>
 </html>
